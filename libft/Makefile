@@ -2,77 +2,87 @@ CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 DIR		= srcs/
 NAME	= libft.a
-SRC		= 	./ft_isalnum.c \
-			./ft_isalpha.c \
-			./ft_isascii.c \
-			./ft_isdigit.c \
-			./ft_isprint.c \
-			./ft_strlen.c \
-			./ft_memset.c \
-			./ft_bzero.c \
-			./ft_memcpy.c \
-			./ft_memmove.c \
-			./ft_strlcat.c \
-			./ft_strlcpy.c \
-			./ft_toupper.c \
-			./ft_tolower.c \
-			./ft_memchr.c \
-			./ft_strchr.c \
-			./ft_strrchr.c \
-			./ft_memcmp.c \
-			./ft_strncmp.c \
-			./ft_strnstr.c \
-			./ft_atoi.c \
-			./ft_calloc.c \
-			./ft_strdup.c \
-			./ft_substr.c \
-			./ft_strjoin.c \
-			./ft_strtrim.c \
-			./ft_split.c \
-			./ft_itoa.c \
-			./ft_strmapi.c \
-			./ft_striteri.c \
-			./ft_putchar_fd.c \
-			./ft_putstr_fd.c \
-			./ft_putendl_fd.c \
-			./ft_putnbr_fd.c
-BONUS_SRC =	./ft_lstnew_bonus.c \
-			./ft_lstadd_front_bonus.c \
-			./ft_lstsize_bonus.c \
-			./ft_lstlast_bonus.c \
-			./ft_lstadd_back_bonus.c \
-			./ft_lstdelone_bonus.c \
-			./ft_lstclear_bonus.c \
-			./ft_lstiter_bonus.c \
-			./ft_lstmap_bonus.c
+SRC		= 	./core/ft_isalnum.c \
+			./core/ft_isalpha.c \
+			./core/ft_isascii.c \
+			./core/ft_isdigit.c \
+			./core/ft_isprint.c \
+			./core/ft_strlen.c \
+			./core/ft_memset.c \
+			./core/ft_bzero.c \
+			./core/ft_memcpy.c \
+			./core/ft_memmove.c \
+			./core/ft_strlcat.c \
+			./core/ft_strlcpy.c \
+			./core/ft_toupper.c \
+			./core/ft_tolower.c \
+			./core/ft_memchr.c \
+			./core/ft_strchr.c \
+			./core/ft_strrchr.c \
+			./core/ft_memcmp.c \
+			./core/ft_strncmp.c \
+			./core/ft_strnstr.c \
+			./core/ft_atoi.c \
+			./core/ft_calloc.c \
+			./core/ft_strdup.c \
+			./core/ft_substr.c \
+			./core/ft_strjoin.c \
+			./core/ft_strtrim.c \
+			./core/ft_split.c \
+			./core/ft_itoa.c \
+			./core/ft_strmapi.c \
+			./core/ft_striteri.c \
+			./core/ft_putchar_fd.c \
+			./core/ft_putstr_fd.c \
+			./core/ft_putendl_fd.c \
+			./core/ft_putnbr_fd.c \
+			./core/ft_lstnew_bonus.c \
+			./core/ft_lstadd_front_bonus.c \
+			./core/ft_lstsize_bonus.c \
+			./core/ft_lstlast_bonus.c \
+			./core/ft_lstadd_back_bonus.c \
+			./core/ft_lstdelone_bonus.c \
+			./core/ft_lstclear_bonus.c \
+			./core/ft_lstiter_bonus.c \
+			./core/ft_lstmap_bonus.c
 OBJS	= ${SRC:.c=.o}
 HEAD	= ./includes/
 AR		= ar rcs
 RM		= rm -f
+
+CORE	= libft_core.a
 
 all: ${NAME}
 
 .c.o:
 		${CC} ${CFLAGS} -c -I ${HEAD} $< -o ${<:.c=.o}
 
-${NAME}: ${OBJS}
-		${AR} ${NAME} ${OBJS}
+$(CORE): ${OBJS}
+		${AR} ${CORE} ${OBJS}
+
+printf: ${CORE}
+		make -C ./printf all
+
+gnl: ${CORE}
+		make -C ./get_next_line all
+
+${NAME}: ${OBJS} core printf
+		ar x ./libft_core.a
+		ar x ./printf/libftprintf.a
+		${AR} ${NAME} *.o
+		rm -f *.o
 
 so:
 		gcc *.o --shared -o libft.so
 
 clean:      
-		rm -f ${OBJS}
+		rm -f ${OBJS} ${CORE} *.o
+		make -C ./printf clean
+		make -C ./get_next_line clean
 
 fclean: clean
 		rm -f ${NAME}
-
-test: all
-		${CC} ${CFLAGS} ${MAIN} ${OBJS}
-		./a.out
+		make -C ./printf fclean
+		make -C ./get_next_line fclean
 
 re: fclean all
-
-bonus:
-		${CC} ${CFLAGS} -c -I ${HEAD} ${SRC} ${BONUS_SRC}
-		${AR} ${NAME} ${SRC:.c=.o} ${BONUS_SRC:.c=.o}

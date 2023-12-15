@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/Users/polepie/developpement/42/libft",
-      "program": "/Users/polepie/developpement/42/libft/build/Debug/outDebug",
+      "cwd": "/home/pepie/Documents/42/libft",
+      "program": "/home/pepie/Documents/42/libft/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
