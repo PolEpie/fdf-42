@@ -66,9 +66,10 @@ printf: ${CORE}
 gnl: ${CORE}
 		make -C ./get_next_line all
 
-${NAME}: ${OBJS} core printf
+${NAME}: ${OBJS} core printf gnl
 		ar x ./libft_core.a
 		ar x ./printf/libftprintf.a
+		ar x ./get_next_line/libgnl.a
 		${AR} ${NAME} *.o
 		rm -f *.o
 

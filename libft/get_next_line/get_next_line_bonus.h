@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_BONUS_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2
+#  define BUFFER_SIZE 10
 # endif
 
 # include <unistd.h>
@@ -22,7 +22,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdbool.h>
-# include "libft.h"
+# include "libft_core.h"
 
 typedef struct s_gnl {
 	t_list		**list;

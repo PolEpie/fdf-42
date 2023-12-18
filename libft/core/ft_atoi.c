@@ -1,0 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: polepie <polepie@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/10 18:49:16 by pepie             #+#    #+#             */
+/*   Updated: 2023/11/12 14:58:39 by polepie          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+int	ft_str_is_num(char str)
+{
+	if (str >= '0' && str <= '9')
+		return (1);
+	else
+		return (0);
+}
+
+int	ft_str_is_whitespace(char str)
+{
+	if (str == ' ' || str == '\t' || str == '\n' || str == '\f')
+		return (1);
+	else if (str == '\v' || str == '\r')
+		return (1);
+	else
+		return (0);
+}
+
+int	ft_atoi(const char*str)
+{
+	int	minus_count;
+	int	num;
+
+	num = 0;
+	minus_count = 0;
+	while (ft_str_is_whitespace(*str))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			minus_count++;
+		str++;
+	}
+	while (ft_str_is_num(*str))
+	{
+		num = num * 10;
+		num = num + *str - '0';
+		str++;
+	}
+	if (minus_count % 2 == 1)
+		num = num * -1;
+	return (num);
+}

@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:44:05 by pepie             #+#    #+#             */
-/*   Updated: 2023/12/15 13:34:18 by pepie            ###   ########.fr       */
+/*   Updated: 2023/12/18 02:53:25 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ bool	save_on_buf(char *str, char *line, char **buf_save)
 		return (false);
 	tmp = NULL;
 	i = verify_contain_nl(str, true);
-	if (i < ft_strlen(str))
+	if (i < (int)ft_strlen(str))
 	{
 		ft_strncat(line, str, i + 1);
 		if (str[i + 1])
@@ -82,7 +82,7 @@ bool	save_on_buf(char *str, char *line, char **buf_save)
 	return (i);
 }
 
-char	*parse_line(t_gnl *gnl, char **buf_save)
+static char	*parse_line(t_gnl *gnl, char **buf_save)
 {
 	int		len;
 	char	*line;

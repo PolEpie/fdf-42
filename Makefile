@@ -20,8 +20,14 @@ CC			=	gcc
 INCLUDE 	=	./includes/
 CFLAGS		=	-Wall -Werror -Wextra -g3 -I$(INCLUDE)
 RM			=	rm -f
+OBJ_DIR		=	objs
 SRCS		=	fdf.c \
 				srcs/windows.c \
+				srcs/windows_mouse.c \
+				srcs/draw.c \
+				srcs/camera.c \
+				srcs/parser.c \
+				srcs/utils.c \
 				srcs/matrix.c
 
 $(LIBFT_A):
@@ -29,7 +35,7 @@ $(LIBFT_A):
 				@echo "Compiled $(LIBFT_A)."
 
 
-OBJS		=	$(SRCS:%.c=%.o)
+OBJS		=	$(SRCS:/%.c=%.o)
 
 all:			$(NAME)
 
@@ -48,11 +54,12 @@ $(MLX_A):
 bonus:			all
 
 .c.o:
-				@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+				@$(CC) $(CFLAGS) -c $< -o $(OBJ_DIR)/$(<:.c=.o)
 				@echo "Compiling $<."
 
 localclean:
-				@$(RM) $(OBJS)
+				@$(RM) -rf $(OBJ_DIR)
+				@mkdir $(OBJ_DIR)
 				@echo "Removed object files."
 
 clean:			localclean
@@ -68,6 +75,9 @@ fclean:			localclean
 				@echo "Clean mlx."
 				@$(RM) $(NAME)
 				@echo "Removed executable."
+
+test:			$(NAME)
+				./fdf test_maps/42.fdf
 
 re:				fclean all
 

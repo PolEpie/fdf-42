@@ -80,3 +80,21 @@ int	init_gnl(t_gnl *gnl)
 		return (1);
 	return (0);
 }
+
+char	*ft_strndup(char *src, int nb)
+{
+	char	*dest;
+	int		i;
+
+	i = 0;
+	dest = malloc(sizeof(char) * (nb + 1));
+	if (!dest)
+		return (NULL);
+	while (src[i] && i < nb)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
