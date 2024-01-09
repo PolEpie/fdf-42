@@ -13,6 +13,7 @@
 		"mlx.h": "c",
 		"printf.h": "c",
 		"get_next_line_bonus.h": "c",
-		"libft_core.h": "c"
+		"libft_core.h": "c",
+		"fdf.h": "c"
 	}
 }

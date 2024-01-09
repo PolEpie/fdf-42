@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:16:48 by pepie             #+#    #+#             */
-/*   Updated: 2023/12/18 01:28:39 by pepie            ###   ########.fr       */
+/*   Updated: 2024/01/06 04:05:36 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ t_vector	*rotate_point(t_data *win, t_vector *v)
 	{0, cos(win->cam_ang->x), -sin(win->cam_ang->x)},
 	{0, sin(win->cam_ang->x), cos(win->cam_ang->x)}
 	};
-	const t_vector	rotationy[3] = {
-	{cos(win->cam_ang->z), -sin(win->cam_ang->z), 0},
-	{sin(win->cam_ang->z), cos(win->cam_ang->z), 0},
-	{0, 0, 1}
-	};
 	const t_vector	rotationz[3] = {
 	{cos(win->cam_ang->y), 0, -sin(win->cam_ang->y)},
 	{0, 1, 0},
@@ -32,7 +27,6 @@ t_vector	*rotate_point(t_data *win, t_vector *v)
 	t_vector		*rotated;
 
 	rotated = matrix_multiply(rotationx, v);
-	rotated = matrix_multiply(rotationy, rotated);
 	rotated = matrix_multiply(rotationz, rotated);
 	return (rotated);
 }
@@ -62,8 +56,10 @@ t_vector	*handle_point(t_data *win, t_vector *v)
 	float			z;
 	t_vector		*rotated;
 
+	if (!win->cam_ang)
+		return (0);
 	rotated = rotate_point(win, v);
-	distance = 4;
+	distance = 20;
 	z = 1 / (distance - rotated->z);
 	rotated = scale_point(z, rotated);
 	rotated->x += win->width / 2;

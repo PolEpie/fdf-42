@@ -41,10 +41,9 @@
 ** c'est normalement le cas.
 */
 
-
 #ifndef MLX_H
 
-#define	MLX_H
+# define MLX_H
 
 enum {
 	ON_KEYDOWN = 2,
@@ -56,47 +55,44 @@ enum {
 	ON_DESTROY = 17
 };
 
-
-void	*mlx_init();
+void			*mlx_init(void);
 /*
 **  needed before everything else.
 **  return (void *)0 if failed
 */
 
-
 /*
 ** Basic actions
 */
 
-void	*mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title);
+void			*mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title);
 /*
 **  return void *0 if failed
 */
-int	mlx_clear_window(void *mlx_ptr, void *win_ptr);
-int	mlx_pixel_put(void *mlx_ptr, void *win_ptr, int x, int y, int color);
+int				mlx_clear_window(void *mlx_ptr, void *win_ptr);
+int				mlx_pixel_put(void *mlx_ptr, void *win_ptr, int x, int y, int color);
 /*
 **  origin for x & y is top left corner of the window
 **  y down is positive
 **  color is 0x00RRGGBB
 */
 
-
 /*
 ** Image stuff
 */
 
-void	*mlx_new_image(void *mlx_ptr,int width,int height);
+void			*mlx_new_image(void *mlx_ptr, int width, int height);
 /*
 **  return void *0 if failed
 */
-char	*mlx_get_data_addr(void *img_ptr, int *bits_per_pixel,
-			   int *size_line, int *endian);
+char			*mlx_get_data_addr(void *img_ptr, int *bits_per_pixel,
+				int *size_line, int *endian);
 /*
 **  endian : 0 = sever X is little endian, 1 = big endian
 **  endian : useless on macos, client and graphical framework have the same endian
 */
-int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
-				int x, int y);
+int				mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, 
+				void *img_ptr, int x, int y);
 unsigned int	mlx_get_color_value(void *mlx_ptr, int color);
 
 

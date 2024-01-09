@@ -18,12 +18,13 @@ MLX_A		=	$(addprefix $(MLX), libmlx.a)
 
 CC			=	gcc
 INCLUDE 	=	./includes/
-CFLAGS		=	-Wall -Werror -Wextra -g3 -I$(INCLUDE)
+CFLAGS		=	-Wall -Werror -Wextra -g -I$(INCLUDE)
 RM			=	rm -f
 OBJ_DIR		=	objs
 SRCS		=	fdf.c \
 				srcs/windows.c \
 				srcs/windows_mouse.c \
+				srcs/windows_keybinds.c \
 				srcs/draw.c \
 				srcs/camera.c \
 				srcs/parser.c \
@@ -77,7 +78,7 @@ fclean:			localclean
 				@echo "Removed executable."
 
 test:			$(NAME)
-				./fdf test_maps/42.fdf
+				valgrind --leak-check=full ./fdf test_maps/42.fdf 
 
 re:				fclean all
 

@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:57:11 by pepie             #+#    #+#             */
-/*   Updated: 2023/12/18 03:27:11 by pepie            ###   ########.fr       */
+/*   Updated: 2024/01/03 04:01:02 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
+
+# define KEY_ESC 65307
 
 typedef struct s_vector
 {
@@ -68,6 +70,9 @@ typedef struct s_line
 	int		col;
 }	t_line;
 
+/* fdf.c */
+void		kill_process(t_data *arg);
+
 /* utils.c */
 int			deg_to_rad(int angleInDegrees);
 int			rad_to_deg(int angleInDegrees);
@@ -76,6 +81,9 @@ int			rad_to_deg(int angleInDegrees);
 int			handle_mouse_move(int x, int y, t_data *win);
 int			handle_mouse_press(int button, int x, int y, t_data *win);
 int			handle_mouse_release(int button, int x, int y, t_data *win);
+
+/* windows_keybinds.c */
+int			handle_key_down(int keycode, t_data *vars);
 
 /* camera.c */
 t_vector	*handle_point(t_data *win, t_vector *v);
@@ -92,4 +100,5 @@ int			rgb_to_int(double r, double g, double b);
 int			draw_line_ppos(t_data *data, t_line *line);
 void		draw_rect(t_rect rect, t_data *data);
 t_vector	*vector_new(float x, float y, float z);
+
 #endif

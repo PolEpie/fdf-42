@@ -6,11 +6,26 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 03:26:27 by pepie             #+#    #+#             */
-/*   Updated: 2023/12/18 03:28:07 by pepie            ###   ########.fr       */
+/*   Updated: 2024/01/09 00:52:43 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	free_split(char **elem)
+{
+	int	i;
+
+	if (!elem)
+		return ;
+	i = 0;
+	while (elem[i])
+	{
+		free(elem[i]);
+		i++;
+	}
+	free(elem);
+}
 
 int	parse_line(char *line, int *list)
 {
@@ -19,6 +34,8 @@ int	parse_line(char *line, int *list)
 	int		value;
 
 	i = 0;
+	if (!list)
+		return (0);
 	splited = ft_split(line, ' ');
 	if (!splited)
 		return (0);
@@ -29,6 +46,8 @@ int	parse_line(char *line, int *list)
 		i++;
 	}
 	list[i] = -1;
+	free_split(splited);
+	free(line);
 	return (1);
 }
 
@@ -38,12 +57,14 @@ int	get_line_lenght(char *line)
 	int			i;
 
 	i = 0;
+	if (!line)
+		return (0);
 	splited = ft_split(line, ' ');
 	if (!splited)
 		return (-1);
 	while (splited[i])
 		i++;
-	free(line);
+	free_split(splited);
 	return (i);
 }
 
