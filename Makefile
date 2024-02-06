@@ -32,7 +32,7 @@ SRCS		=	fdf.c \
 				srcs/matrix.c
 
 
-X11_FLAGS = -L/usr/X11/lib -lXext -lX11
+X11_FLAGS = -L/usr/X11/lib -lXext -lX11 -framework Cocoa -framework OpenGL -framework AppKit
 
 $(LIBFT_A):
 				@$(MAKE) -s -C $(LIBFT)
@@ -44,7 +44,7 @@ OBJS		=	$(SRCS:/%.c=%.o)
 all:			$(NAME)
 
 $(NAME):		$(OBJS) $(LIBFT_A) $(MLX_A)
-				$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(MLX) -lmlx -o $(NAME) $(X11_FLAGS) -lGL -lm
+				gcc $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(MLX) -lmlx -o $(NAME) $(X11_FLAGS) -lGL -lm
 				@echo "Linked into executable \033[0;32mfdf\033[0m."
 
 $(LIBFT_A):
