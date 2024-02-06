@@ -12,7 +12,7 @@
 
 NAME		=	fdf
 LIBFT		=	libft/
-MLX			=	minilibx/
+MLX			=	minilibx-mac-osx/
 LIBFT_A		=	$(addprefix $(LIBFT), libft.a)
 MLX_A		=	$(addprefix $(MLX), libmlx.a)
 
@@ -31,6 +31,9 @@ SRCS		=	fdf.c \
 				srcs/utils.c \
 				srcs/matrix.c
 
+
+X11_FLAGS = -L/usr/X11/lib -lXext -lX11
+
 $(LIBFT_A):
 				@$(MAKE) -s -C $(LIBFT)
 				@echo "Compiled $(LIBFT_A)."
@@ -41,7 +44,7 @@ OBJS		=	$(SRCS:/%.c=%.o)
 all:			$(NAME)
 
 $(NAME):		$(OBJS) $(LIBFT_A) $(MLX_A)
-				$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(MLX) -lmlx -L$(MLX)lib -lXext -o $(NAME) -lX11 -lGL -lm -lbsd
+				$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(MLX) -lmlx -o $(NAME) $(X11_FLAGS) -lGL -lm
 				@echo "Linked into executable \033[0;32mfdf\033[0m."
 
 $(LIBFT_A):
