@@ -45,6 +45,8 @@
 
 # define MLX_H
 
+#include <stdio.h>
+
 enum {
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,

@@ -6,7 +6,7 @@
 /*   By: polepie <polepie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 03:26:27 by pepie             #+#    #+#             */
-/*   Updated: 2024/02/05 21:35:04 by polepie          ###   ########.fr       */
+/*   Updated: 2024/03/06 14:01:16 by polepie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_split(char **elem)
 	free(elem);
 }
 
-int	parse_line_gnl(char *line, int *list)
+int	parse_line(char *line, int *list)
 {
 	char	**splited;
 	int		i;
@@ -87,7 +87,7 @@ int	parse_file(int fd, t_points *points)
 		if (!row)
 			return (0);
 		ft_lstadd_back(points->row, ft_lstnew(row));
-		if (!parse_line_gnl(line, ft_lstlast(*(points->row))->content))
+		if (!parse_line(line, ft_lstlast(*(points->row))->content))
 			return (0);
 		line = get_next_line(fd);
 		i++;
