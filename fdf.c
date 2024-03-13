@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:12:47 by pepie             #+#    #+#             */
-/*   Updated: 2024/03/13 13:25:17 by pepie            ###   ########.fr       */
+/*   Updated: 2024/03/13 14:21:07 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ int	kill_process(t_data *arg)
 		free(arg->cam_ang);
 	mlx_destroy_image(arg->mlx, arg->img);
 	mlx_destroy_window(arg->mlx, arg->win);
+    mlx_destroy_display(arg->mlx);
+    free(arg->mlx);
 	free(arg);
 	arg = NULL;
 	exit(0);
