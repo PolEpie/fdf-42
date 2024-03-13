@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:12:47 by pepie             #+#    #+#             */
-/*   Updated: 2024/01/09 02:34:54 by pepie            ###   ########.fr       */
+/*   Updated: 2024/03/13 13:25:17 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	run_window(t_data *win)
 	mlx_hook(win->win, ON_MOUSEMOVE, (1L << 6), handle_mouse_move, win);
 	mlx_key_hook(win->win, handle_key_down, win);
 	mlx_loop_hook(win->mlx, draw_points, win);
+    mlx_hook(win->win, DestroyNotify, 0, (int (*)())kill_process, win);
 	mlx_loop(win->mlx);
 	return (0);
 }
@@ -96,7 +97,7 @@ int	main(int argv, char **argc)
 	return (run_window(data));
 }
 
-void	kill_process(t_data *arg)
+int	kill_process(t_data *arg)
 {
 	arg->width = -1;
 	if (arg->last_mouse)
@@ -114,4 +115,5 @@ void	kill_process(t_data *arg)
 	free(arg);
 	arg = NULL;
 	exit(0);
+    return (0);
 }

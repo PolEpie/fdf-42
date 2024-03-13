@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:57:11 by pepie             #+#    #+#             */
-/*   Updated: 2024/01/03 04:01:02 by pepie            ###   ########.fr       */
+/*   Updated: 2024/03/13 13:25:26 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
+# include <X11/X.h>
 
 # define KEY_ESC 65307
 
@@ -71,7 +72,7 @@ typedef struct s_line
 }	t_line;
 
 /* fdf.c */
-void		kill_process(t_data *arg);
+int		    kill_process(t_data *arg);
 
 /* utils.c */
 int			deg_to_rad(int angleInDegrees);
