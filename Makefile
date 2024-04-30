@@ -92,7 +92,7 @@ fclean:			localclean
 				@echo "Removed executable."
 
 test:			$(NAME)
-				valgrind --leak-check=full --show-leak-kinds=all ./fdf test_maps/julia.fdf 
+				valgrind --leak-check=full --show-leak-kinds=all ./fdf test_maps/42.fdf 
 
 re:				fclean all
 

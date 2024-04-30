@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:38:30 by pepie             #+#    #+#             */
-/*   Updated: 2024/03/13 16:47:02 by pepie            ###   ########.fr       */
+/*   Updated: 2024/04/15 17:59:28 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	draw_line(t_data *win, t_vector *v1, t_vector *v2)
 	free(pos2);
 }
 
-int calculate_altitule(int in)
+float	calculate_altitule(int in, t_data *win)
 {
-    return (in);
+    return (in * win->amplitude);
 }
 
 typedef struct s_draw_square_args_norm {
@@ -44,8 +44,8 @@ typedef struct s_draw_square_args_norm {
 typedef struct s_draw_squares_args {
 	t_list	*lst;
     t_list  *lst_last_row;
-	int		h_case_top;
-	int		h_case_left;
+	float	h_case_top;
+	float	h_case_left;
     bool    is_border_left;
     bool    is_border_top;
     int     i;
@@ -70,13 +70,13 @@ void	draw_square(t_draw_square_args_norm *argc, t_draw_squares_args *arg)
 	draw_line(argc->win, v1, v2);
     if (arg->is_border_left)
     {
-        v1 = vector_new(argc->x, argc->y, arg->h_case_left);
-        v2 = vector_new(argc->x, argc->y + 1, arg->h_case_left);
+        v1 = vector_new(argc->x, argc->y, arg->h_case_top);
+        v2 = vector_new(argc->x, argc->y + 1, argc->z);
         draw_line(argc->win, v1, v2);
     }
-     if (arg->is_border_top)
+    if (arg->is_border_top)
     {
-        v1 = vector_new(argc->x, argc->y, argc->z);
+        v1 = vector_new(argc->x, argc->y, arg->h_case_left);
         v2 = vector_new(argc->x + 1, argc->y, argc->z);
         draw_line(argc->win, v1, v2);
     }
@@ -107,15 +107,12 @@ int	draw_squares(t_data *win)
 		{
 			args->lst_content = args->lst->content;
             if (args->j > 0)
-                args->h_case_left = calculate_altitule(args->lst_content[args->j - 1]);
+                args->h_case_left = calculate_altitule(args->lst_content[args->j - 1], win);
             else
-                args->h_case_left = calculate_altitule(args->lst_content[args->j]);;
-            if (args->i > 0)
-                args->h_case_top = calculate_altitule(((int *)lst_last_row->content)[args->j]);
-            else
-                args->h_case_top = calculate_altitule(args->lst_content[args->j]);
+                args->h_case_left = calculate_altitule(args->lst_content[args->j], win);
+            args->h_case_top = calculate_altitule(((int *)lst_last_row->content)[args->j], win);
 			draw_square(&(t_draw_square_args_norm){win, args->j, args->i,
-				calculate_altitule(args->lst_content[args->j])}, args);
+				calculate_altitule(args->lst_content[args->j], win)}, args);
 			args->j++;
             args->is_border_left = false;
 		}

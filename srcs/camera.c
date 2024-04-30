@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:16:48 by pepie             #+#    #+#             */
-/*   Updated: 2024/03/13 15:48:08 by pepie            ###   ########.fr       */
+/*   Updated: 2024/04/15 17:30:34 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_vector	*handle_point(t_data *win, t_vector *v)
 	if (!win->cam_ang)
 		return (0);
 	rotated = rotate_point(win, v);
-	distance = 20;
+	distance = win->cam_ang->z;
 	z = 1 / (distance - rotated->z);
 	rotated = scale_point(z, rotated);
 	rotated->x += win->width / 2;

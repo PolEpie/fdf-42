@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:12:47 by pepie             #+#    #+#             */
-/*   Updated: 2024/03/13 14:21:07 by pepie            ###   ########.fr       */
+/*   Updated: 2024/04/15 17:30:49 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_data	*create_window(void)
 	void	*win2;
 
 	mlx = mlx_init();
+	if (!mlx)
+		return (NULL);
 	win2 = mlx_new_window(mlx, 500, 500, "Fdf pepie");
 	win = malloc(sizeof(t_data));
 	if (!win)
@@ -31,7 +33,8 @@ t_data	*create_window(void)
 	win->width = 500;
 	win->height = 500;
 	win->mouse_pressed = false;
-	win->cam_ang = vector_new(deg_to_rad(20), deg_to_rad(0), deg_to_rad(0));
+	win->amplitude = 1;
+	win->cam_ang = vector_new(deg_to_rad(20), deg_to_rad(0), 20);
 	if (!win->cam_ang)
 		return (free(win), NULL);
 	win->last_mouse = vector_new(0, 0, 0);

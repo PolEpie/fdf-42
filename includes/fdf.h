@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:57:11 by pepie             #+#    #+#             */
-/*   Updated: 2024/03/13 13:25:26 by pepie            ###   ########.fr       */
+/*   Updated: 2024/04/15 17:27:16 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <X11/X.h>
 
 # define KEY_ESC 65307
+
+# define SCROLL_UP 4
+# define SCROLL_DOWN 5
 
 typedef struct s_vector
 {
@@ -50,7 +53,8 @@ typedef struct s_data
 	t_vector	*last_mouse;
 	t_vector	*cam_ang;
 	t_points	*points;
-	bool		mouse_pressed;
+	int			mouse_pressed;
+	float		amplitude;
 }	t_data;
 
 typedef struct s_rect
