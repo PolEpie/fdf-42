@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:57:11 by pepie             #+#    #+#             */
-/*   Updated: 2024/04/15 17:27:16 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/07 15:27:35 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
 
+# define DBL_MAX 1.7976931348623158e+308 /* max value */
+# define DBL_MIN 2.2250738585072014e-308 /* min positive value */
+
+# define FLT_MAX 3.402823466e+38F /* max value */
+# define FLT_MIN 1.175494351e-38F /* min positive value */
+
 typedef struct s_vector
 {
 	float	x;
@@ -38,6 +44,12 @@ typedef struct s_points
 	int		h;
 	t_list	**row;
 }	t_points;
+
+typedef struct s_map
+{
+	long	color;
+	int		y;
+}	t_map;
 
 typedef struct s_data
 {
@@ -76,7 +88,7 @@ typedef struct s_line
 }	t_line;
 
 /* fdf.c */
-int		    kill_process(t_data *arg);
+int			kill_process(t_data *arg);
 
 /* utils.c */
 int			deg_to_rad(int angleInDegrees);

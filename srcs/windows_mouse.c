@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:03:38 by pepie             #+#    #+#             */
-/*   Updated: 2024/04/15 17:31:42 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/07 11:30:59 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,20 @@ void	handle_mouse_scroll(bool is_up, t_data *win)
 		win->cam_ang->z -= 1;
 	else
 		win->cam_ang->z += 1;
-	printf("amplitude: %.6f\n", win->amplitude);
+	if (win->cam_ang->z <= 10)
+		win->cam_ang->z = 11;
 }
 
 int	handle_mouse_press(int button, int x, int y, t_data *win)
 {
-	ft_printf("", x, y);
+	(void)x;
+	(void)y;
 	if (button == 1)
 		win->mouse_pressed = true;
 	else if (button == SCROLL_UP)
 		handle_mouse_scroll(true, win);
 	else if (button == SCROLL_DOWN)
 		handle_mouse_scroll(false, win);
-		
 	return (0);
 }
 
