@@ -16,9 +16,9 @@ MLX			=	minilibx/
 LIBFT_A		=	$(addprefix $(LIBFT), libft.a)
 MLX_A		=	$(addprefix $(MLX), libmlx.a)
 
-CC			=	gcc
+CC			=	cc
 INCLUDE 	=	./includes/
-CFLAGS		=	-Wall -Werror -Wextra -g -I$(INCLUDE) -I$(LIBFT)includes
+CFLAGS		=	-Wall -Werror -Wextra -g -I$(INCLUDE) -I/usr/X11/include -I$(LIBFT)includes
 RM			=	rm -f
 OBJ_DIR		=	objs
 SRCS		=	fdf.c \
@@ -42,10 +42,10 @@ OS_NAME		:=	$(shell uname -s | tr A-Z a-z)
 $(NAME):		$(OBJS) $(LIBFT_A) $(MLX_A)
 				@if [ "$(OS_NAME)" = "darwin" ]; then \
 					echo "Compiling for MacOS..."; \
-					$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(MLX) -lmlx -o $(NAME) $(MACOS_FLAG); \
+					gcc $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(MLX) -lmlx -o $(NAME) $(MACOS_FLAG); \
 				else \
 					echo "Compiling for Linux..."; \
-					$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -o $(NAME) $(LINUX_FLAG); \
+					$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(MLX) -lmlx -o $(NAME) $(LINUX_FLAG); \
 				fi
 				@echo "Linked into executable \033[0;32mfdf\033[0m."
 
@@ -56,11 +56,7 @@ $(LIBFT_A):
 				@echo "Compiled $(LIBFT_A)."
 
 MACOS_FLAG	=	-L/usr/X11/lib -lX11 -lXext
-LINUX_FLAG	=	-L$(MLX) -lmlx -L$(MLX)lib -lX11 -lXext -lGL -lm -lbsd
-
-$(LIBFT_A):
-				@$(MAKE) -s -C $(LIBFT) all
-				@echo "Compiled $(LIBFT_A)."
+LINUX_FLAG	=   -lX11 -lXext -lGL -lm -lbsd
 
 $(MLX_A):
 				@$(MAKE) -s -C $(MLX)
