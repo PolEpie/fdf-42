@@ -23,6 +23,7 @@ RM			=	rm -f
 OBJ_DIR		=	objs
 SRCS		=	fdf.c \
 				srcs/windows.c \
+				srcs/draw_line.c \
 				srcs/windows_mouse.c \
 				srcs/windows_keybinds.c \
 				srcs/draw.c \

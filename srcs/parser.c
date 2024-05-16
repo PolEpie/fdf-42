@@ -6,26 +6,11 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 03:26:27 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 14:17:53 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 14:33:36 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	free_split(char **elem)
-{
-	int	i;
-
-	if (!elem)
-		return ;
-	i = 0;
-	while (elem[i])
-	{
-		free(elem[i]);
-		i++;
-	}
-	free(elem);
-}
 
 t_map	*new_map(long color, int value)
 {
@@ -47,7 +32,6 @@ int	parse_line(char *line, t_map **list)
 	i = 0;
 	if (!list)
 		return (0);
-	// ft_printf("line: %s\n", line);
 	splited = ft_split(line, ' ');
 	if (!splited)
 		return (0);
@@ -63,10 +47,10 @@ int	parse_line(char *line, t_map **list)
 		else
 			list[i] = new_map(0, value);
 		i++;
-		free_split(splited_with_col);
+		ft_freesplit(splited_with_col);
 	}
 	list[i] = NULL;
-	return (free_split(splited), free(line), 1);
+	return (ft_freesplit(splited), free(line), 1);
 }
 
 int	get_line_lenght(char *line)
@@ -82,7 +66,7 @@ int	get_line_lenght(char *line)
 		return (-1);
 	while (splited[i])
 		i++;
-	free_split(splited);
+	ft_freesplit(splited);
 	return (i);
 }
 

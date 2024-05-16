@@ -6,74 +6,15 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:40:31 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 13:40:45 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 14:35:07 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
+float	calculate_altitule(int in, t_data *win)
 {
-	char	*dst;
-
-	if (x > 1920 || y > 1080 || x < 0 || y < 0)
-		return ;
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
-int	rgb_to_int(double r, double g, double b)
-{
-	int	color;
-
-	color = 0;
-	color |= (int)(b * 255);
-	color |= (int)(g * 255) << 8;
-	color |= (int)(r * 255) << 16;
-	return (color);
-}
-
-int	draw_line_ppos(t_data *data, t_line *line)
-{
-	double	deltax;
-	double	deltay;
-	double	pixx;
-	double	pixy;
-	int		pixels;
-
-	if (line->beginx == line->endx && line->beginy == line->endy)
-		return (1);
-	if (line->beginx < 0)
-		line->beginx = 0;
-	if (line->beginy < 0)
-		line->beginy = 0;
-	if (line->endx < 0)
-		line->endx = 0;
-	if (line->endy < 0)
-		line->endy = 0;
-	if (line->beginx > 1920)
-		line->beginx = 1920;
-	if (line->beginy > 1920)
-		line->beginy = 1920;
-	if (line->endx > 1920)
-		line->endx = 1920;
-	if (line->endy > 1920)
-		line->endy = 1920;
-	deltay = line->endy - line->beginy;
-	deltax = line->endx - line->beginx;
-	pixels = sqrt((deltax * deltax) + (deltay * deltay));
-	deltax /= pixels;
-	deltay /= pixels;
-	pixx = line->beginx;
-	pixy = line->beginy;
-	while (pixels)
-	{
-		ft_mlx_pixel_put(data, pixx, pixy, line->col);
-		pixx += deltax;
-		pixy += deltay;
-		--pixels;
-	}
-	return (1);
+	return (in * win->amplitude);
 }
 
 void	draw_rect(t_rect rect, t_data *data)
@@ -92,4 +33,49 @@ void	draw_rect(t_rect rect, t_data *data)
 		}
 		i++;
 	}
+}
+
+int	draw_squares(t_data *win)
+{
+	t_draw_squares_args	*args;
+	t_list				*lst_last_row;
+
+	if (!win || !win->win)
+		return (1);
+	args = malloc(sizeof(t_draw_squares_args));
+	if (!args)
+		return (1);
+	args->i = 0;
+	args->j = 0;
+	args->h_case_left = 0;
+	args->h_case_top = 0;
+	args->lst = *(win->points->row);
+	args->is_border_top = true;
+	lst_last_row = *(win->points->row);
+	while (args->lst)
+	{
+		args->j = 0;
+		args->is_border_left = true;
+		while (args->j < win->points->w)
+		{
+			args->lst_content = args->lst->content;
+			args->color = (args->lst_content[args->j])->color;
+			if (args->j > 0)
+				args->h_case_left = calculate_altitule(args->lst_content[args->j - 1]->y, win);
+			else
+				args->h_case_left = calculate_altitule(args->lst_content[args->j]->y, win);
+			args->h_case_top = calculate_altitule(((t_map **)lst_last_row->content)[args->j]->y, win);
+			draw_square(&(t_draw_square_args_norm){win, args->j, args->i,
+				calculate_altitule(args->lst_content[args->j]->y, win)}, args);
+			args->j++;
+			args->is_border_left = false;
+		}
+		if (args->i > 0)
+			lst_last_row = lst_last_row->next;
+		args->i++;
+		args->lst = args->lst->next;
+		args->is_border_top = false;
+	}
+	free(args);
+	return (0);
 }

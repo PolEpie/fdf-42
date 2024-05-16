@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:57:11 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 14:00:34 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 14:36:19 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,26 @@ typedef struct s_line
 	int		col;
 }	t_line;
 
+typedef struct s_draw_squares_args {
+	t_list	*lst;
+	t_list	*lst_last_row;
+	float	h_case_top;
+	float	h_case_left;
+	bool	is_border_left;
+	bool	is_border_top;
+	int		i;
+	int		j;
+	t_map	**lst_content;
+	long	color;
+}	t_draw_squares_args;
+
+typedef struct s_draw_square_args_norm {
+	t_data	*win;
+	int		x;
+	int		y;
+	int		z;
+}	t_draw_square_args_norm;
+
 /* fdf.c */
 int			kill_process(t_data *arg);
 
@@ -118,5 +138,8 @@ int			rgb_to_int(double r, double g, double b);
 int			draw_line_ppos(t_data *data, t_line *line);
 void		draw_rect(t_rect rect, t_data *data);
 t_vector	*vector_new(double x, double y, double z);
+
+void		draw_square(t_draw_square_args_norm *ac, t_draw_squares_args *ag);
+int			draw_squares(t_data *win);
 
 #endif
