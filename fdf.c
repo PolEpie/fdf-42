@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:12:47 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 14:20:30 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 16:37:32 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_data	*create_window(void)
 
 int	run_window(t_data *win)
 {
-	win->cam_ang = vector_new(deg_to_rad(20), deg_to_rad(0), 20);
+	win->cam_ang = vector_new(0.625000, -0.500000, 20);
 	if (!win->cam_ang)
 		return (free(win), 1);
 	win->last_mouse = vector_new(0, 0, 0);
@@ -55,18 +55,13 @@ int	run_window(t_data *win)
 	return (0);
 }
 
-int	init_points(t_points *points)
+int	handle_file_with_verif(int fd, t_points *points)
 {
 	points->row = malloc(sizeof(t_list *));
 	if (!(points->row))
 		return (0);
 	*(points->row) = NULL;
 	points->w = 0;
-	return (1);
-}
-
-int	handle_file_with_verif(int fd, t_points *points)
-{
 	if (!parse_file(fd, points))
 		return (0);
 	return (1);
@@ -90,12 +85,10 @@ int	main(int argv, char **argc)
 	points = malloc(sizeof(t_points));
 	if (!points)
 		return (1);
-	if (!init_points(points))
-		return (1);
 	if (!handle_file_with_verif(fd, points))
 		return (1);
 	data->points = points;
-	ft_printf("Parsed\n");
+	ft_printf("Parsed2\n");
 	return (run_window(data));
 }
 

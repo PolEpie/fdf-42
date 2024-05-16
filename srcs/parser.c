@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 03:26:27 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 14:33:36 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 16:33:47 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,33 @@ t_map	*new_map(long color, int value)
 	map = malloc(sizeof(t_map));
 	map->color = color;
 	map->y = value;
+	ft_printf("%d", value);
 	return (map);
+}
+
+static int	process_line(int i, char *line, t_map **list)
+{
+	char	**splited_w_col;
+	int		value;
+
+	splited_w_col = ft_split(line, ',');
+	if (!splited_w_col)
+		return (0);
+	value = ft_atoi(splited_w_col[0]);
+	if (splited_w_col[1])
+		list[i] = new_map(ft_atol_base(splited_w_col[1] + 2,
+					"0123456789ABCDEF"), value);
+	else
+		list[i] = new_map(0, value);
+	ft_printf("T");
+	ft_freesplit(splited_w_col);
+	return (1);
 }
 
 int	parse_line(char *line, t_map **list)
 {
 	char	**splited;
-	char	**splited_with_col;
 	int		i;
-	int		value;
 
 	i = 0;
 	if (!list)
@@ -37,17 +55,10 @@ int	parse_line(char *line, t_map **list)
 		return (0);
 	while (splited[i])
 	{
-		splited_with_col = ft_split(splited[i], ',');
-		if (!splited_with_col)
+		ft_printf("T");
+		if (!process_line(i, splited[i], list))
 			return (0);
-		value = ft_atoi(splited_with_col[0]);
-		if (splited_with_col[1])
-			list[i] = new_map(ft_atol_base(splited_with_col[1] + 2,
-						"0123456789ABCDEF"), value);
-		else
-			list[i] = new_map(0, value);
 		i++;
-		ft_freesplit(splited_with_col);
 	}
 	list[i] = NULL;
 	return (ft_freesplit(splited), free(line), 1);

@@ -18,7 +18,7 @@ MLX_A		=	$(addprefix $(MLX), libmlx.a)
 
 CC			=	cc
 INCLUDE 	=	./includes/
-CFLAGS		=	-Wall -Werror -Wextra -g -I$(INCLUDE) -I/usr/X11/include -I$(LIBFT)includes
+CFLAGS		=	-Wall -Werror -Wextra -g -I$(INCLUDE) -I/usr/X11/include -I$(LIBFT)includes -I$(MLX)
 RM			=	rm -f
 OBJ_DIR		=	objs
 SRCS		=	fdf.c \
