@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:12:47 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 16:37:32 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 16:38:51 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,11 @@ int	main(int argv, char **argc)
 	points = malloc(sizeof(t_points));
 	if (!points)
 		return (1);
+	ft_printf("Parsing...\n");
 	if (!handle_file_with_verif(fd, points))
 		return (1);
 	data->points = points;
-	ft_printf("Parsed2\n");
+	ft_printf("Parsed !\n");
 	return (run_window(data));
 }
 

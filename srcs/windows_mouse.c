@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:03:38 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 16:37:49 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 16:39:17 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	handle_mouse_press(int button, int x, int y, t_data *win)
 
 int	handle_mouse_release(int button, int x, int y, t_data *win)
 {
-	ft_printf("", x, y);
+	(void)x;
+	(void)y;
 	if (button == 1)
 		win->mouse_pressed = false;
 	return (0);
