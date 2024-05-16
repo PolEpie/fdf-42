@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 03:26:27 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 16:39:36 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 16:52:39 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	process_line(int i, char *line, t_map **list)
 	return (1);
 }
 
-int	parse_line(char *line, t_map **list)
+int	parse_line(char *line, t_map **list, int w)
 {
 	char	**splited;
 	int		i;
@@ -51,7 +51,7 @@ int	parse_line(char *line, t_map **list)
 	splited = ft_split(line, ' ');
 	if (!splited)
 		return (0);
-	while (splited[i])
+	while (splited[i] && i < w)
 	{
 		if (!process_line(i, splited[i], list))
 			return (0);
@@ -97,7 +97,7 @@ int	parse_file(int fd, t_points *points)
 		if (!row)
 			return (0);
 		ft_lstadd_back(points->row, ft_lstnew(row));
-		if (!parse_line(line, ft_lstlast(*(points->row))->content))
+		if (!parse_line(line, ft_lstlast(*(points->row))->content, len))
 			return (0);
 		line = get_next_line(fd);
 		i++;
