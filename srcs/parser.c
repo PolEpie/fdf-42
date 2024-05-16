@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 03:26:27 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/07 15:16:05 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 14:17:53 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	parse_line(char *line, t_map **list)
 	i = 0;
 	if (!list)
 		return (0);
-	ft_printf("line: %s\n", line);
+	// ft_printf("line: %s\n", line);
 	splited = ft_split(line, ' ');
 	if (!splited)
 		return (0);
@@ -62,7 +62,6 @@ int	parse_line(char *line, t_map **list)
 						"0123456789ABCDEF"), value);
 		else
 			list[i] = new_map(0, value);
-		ft_printf("value: %d | %s (%s)\n", i, splited[i], splited_with_col[0]);
 		i++;
 		free_split(splited_with_col);
 	}
@@ -109,9 +108,9 @@ int	parse_file(int fd, t_points *points)
 		if (!parse_line(line, ft_lstlast(*(points->row))->content))
 			return (0);
 		line = get_next_line(fd);
-		ft_printf("T (%s)\n", line);
 		i++;
 	}
 	points->h = i;
+	points->scale = 10000 / ft_mathmax(points->w, points->h);
 	return (1);
 }

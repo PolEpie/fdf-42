@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:40:31 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 13:14:34 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 13:40:45 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,32 @@ int	draw_line_ppos(t_data *data, t_line *line)
 	double	pixy;
 	int		pixels;
 
-	//printf("line: %f->%f\t%f->%f\n", line->beginx, line->beginy, line->endx, line->endy);
-	/* if (line->beginx <= DBL_MIN)
-		return (0);
-	if (line->beginy <= DBL_MIN)
-		return (0);
-	if (line->endx <= DBL_MIN)
-		return (0);
-	if (line->endy <= DBL_MIN)
-		return (0);
-	if (line->beginx >= DBL_MAX)
-		return (0);
-	if (line->beginy >= DBL_MAX)
-		return (0);
-	if (line->endx >= DBL_MAX)
-		return (0);
-	if (line->endy >= DBL_MAX)
-		return (0); */
+	if (line->beginx == line->endx && line->beginy == line->endy)
+		return (1);
+	if (line->beginx < 0)
+		line->beginx = 0;
+	if (line->beginy < 0)
+		line->beginy = 0;
+	if (line->endx < 0)
+		line->endx = 0;
+	if (line->endy < 0)
+		line->endy = 0;
+	if (line->beginx > 1920)
+		line->beginx = 1920;
+	if (line->beginy > 1920)
+		line->beginy = 1920;
+	if (line->endx > 1920)
+		line->endx = 1920;
+	if (line->endy > 1920)
+		line->endy = 1920;
 	deltay = line->endy - line->beginy;
 	deltax = line->endx - line->beginx;
-	//printf("deltax: %f %f\n", line->endx, line->beginx);
 	pixels = sqrt((deltax * deltax) + (deltay * deltay));
 	deltax /= pixels;
 	deltay /= pixels;
 	pixx = line->beginx;
 	pixy = line->beginy;
-    printf("pixels: %d\n", pixels);
-    while (pixels)
+	while (pixels)
 	{
 		ft_mlx_pixel_put(data, pixx, pixy, line->col);
 		pixx += deltax;

@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:40:25 by pepie             #+#    #+#             */
-/*   Updated: 2024/01/06 04:05:12 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 13:39:00 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_vector	*matrix_multiply(const t_vector v_1[2], t_vector *v_2)
 	return (res);
 }
 
-t_vector	*vector_new(float x, float y, float z)
+t_vector	*vector_new(double x, double y, double z)
 {
 	t_vector	*vector;
 

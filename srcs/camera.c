@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:16:48 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/07 11:24:44 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 14:17:28 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ t_vector	*rotate_point(t_data *win, t_vector *v)
 	return (rotated);
 }
 
-t_vector	*scale_point(float z, t_vector *vector)
+t_vector	*scale_point(float z, t_vector *vector, int scale)
 {
-	const int		scale = 200;
 	const t_vector	projection[3] = {
 	{z, 0, 0},
 	{0, z, 0},
@@ -52,16 +51,16 @@ t_vector	*scale_point(float z, t_vector *vector)
 
 t_vector	*handle_point(t_data *win, t_vector *v)
 {
-	float			distance;
-	float			z;
+	double			distance;
+	double			z;
 	t_vector		*rotated;
 
 	if (!win->cam_ang)
 		return (0);
 	rotated = rotate_point(win, v);
 	distance = win->cam_ang->z;
-	z = 1 / (distance - rotated->z);
-	rotated = scale_point(z, rotated);
+	z = 1 / distance;
+	rotated = scale_point(z, v, win->points->scale);
 	rotated->x += win->width / 2;
 	rotated->y += win->height / 2;
 	return (rotated);

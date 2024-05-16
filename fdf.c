@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:12:47 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/07 11:35:17 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 14:20:30 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(int argv, char **argc)
 	if (!handle_file_with_verif(fd, points))
 		return (1);
 	data->points = points;
-	ft_printf("Parsed");
+	ft_printf("Parsed\n");
 	return (run_window(data));
 }
 

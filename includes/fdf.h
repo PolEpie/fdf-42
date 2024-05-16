@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:57:11 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/07 15:27:35 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 14:00:34 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,16 @@
 
 typedef struct s_vector
 {
-	float	x;
-	float	y;
-	float	z;
+	double	x;
+	double	y;
+	double	z;
 }	t_vector;
 
 typedef struct s_points
 {
 	int		w;
 	int		h;
+	int		scale;
 	t_list	**row;
 }	t_points;
 
@@ -80,10 +81,10 @@ typedef struct s_rect
 
 typedef struct s_line
 {
-	float	beginx;
-	float	beginy;
-	float	endx;
-	float	endy;
+	int		beginx;
+	int		beginy;
+	int		endx;
+	int		endy;
 	int		col;
 }	t_line;
 
@@ -116,6 +117,6 @@ t_vector	*matrix_multiply(const t_vector v_1[2], t_vector *v_2);
 int			rgb_to_int(double r, double g, double b);
 int			draw_line_ppos(t_data *data, t_line *line);
 void		draw_rect(t_rect rect, t_data *data);
-t_vector	*vector_new(float x, float y, float z);
+t_vector	*vector_new(double x, double y, double z);
 
 #endif
