@@ -66,5 +66,5 @@
     "get_next_line_bonus.h": "c",
     "stdlib.h": "c",
     "type_traits": "c"
-}
+  }
 }

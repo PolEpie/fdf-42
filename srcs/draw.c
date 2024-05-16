@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:38:30 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/07 15:41:48 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/16 13:16:09 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,19 @@ void	draw_line(t_data *win, t_vector *v1, t_vector *v2, long color)
 
 	if (color == 0)
 		color = 0xFFFFFF;
-	ft_printf("v1: %lu\n", color);
+	//ft_printf("v1: %lu\n", color);
 	pos1 = handle_point(win, v1);
 	if (!pos1)
 		return ;
 	pos2 = handle_point(win, v2);
 	if (!pos2)
 		return ;
+
+    printf("pos1: %f->%f | %f->%f\n", pos1->x, pos1->y, pos2->x, pos2->y);
+
 	draw_line_ppos(win, &(t_line){pos1->x, pos1->y, pos2->x,
 		pos2->y, color});
-	ft_printf("oh\n");
+	//ft_printf("oh\n");
 	free(pos1);
 	free(pos2);
 }
