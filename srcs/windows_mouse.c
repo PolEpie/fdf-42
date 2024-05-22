@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:03:38 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 16:39:17 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/22 13:01:08 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@ int	handle_mouse_move(int x, int y, t_data *win)
 
 void	handle_mouse_scroll(bool is_up, t_data *win)
 {
+	if (win->is_ctrl_press)
+	{
+		if (is_up)
+			win->amplitude -= 0.1;
+		else
+			win->amplitude += 0.1;
+		if (win->amplitude <= 0.1)
+			win->amplitude = 0.1;
+		return ;
+	}
 	if (is_up)
 		win->cam_ang->z -= 1;
 	else

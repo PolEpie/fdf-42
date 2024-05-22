@@ -6,13 +6,13 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:40:31 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 16:24:51 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/22 13:07:39 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-float	calculate_altitule(int in, t_data *win)
+double	calculate_altitule(double in, t_data *win)
 {
 	return (in * win->amplitude);
 }

@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:57:11 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 14:36:19 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/22 13:08:21 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <X11/X.h>
 
 # define KEY_ESC 65307
+# define KEY_CTRL 65507
 
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
@@ -67,7 +68,8 @@ typedef struct s_data
 	t_vector	*cam_ang;
 	t_points	*points;
 	int			mouse_pressed;
-	float		amplitude;
+	double		amplitude;
+	bool		is_ctrl_press;
 }	t_data;
 
 typedef struct s_rect
@@ -91,8 +93,8 @@ typedef struct s_line
 typedef struct s_draw_squares_args {
 	t_list	*lst;
 	t_list	*lst_last_row;
-	float	h_case_top;
-	float	h_case_left;
+	double	h_case_top;
+	double	h_case_left;
 	bool	is_border_left;
 	bool	is_border_top;
 	int		i;
@@ -122,6 +124,7 @@ int			handle_mouse_release(int button, int x, int y, t_data *win);
 
 /* windows_keybinds.c */
 int			handle_key_down(int keycode, t_data *vars);
+int			handle_key_up(int keycode, t_data *vars);
 
 /* camera.c */
 t_vector	*handle_point(t_data *win, t_vector *v);

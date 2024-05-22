@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:12:47 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 16:47:46 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/22 13:06:05 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_data	*create_window(void)
 	win->width = 1920;
 	win->height = 1080;
 	win->mouse_pressed = false;
+	win->is_ctrl_press = false;
 	win->amplitude = 1;
 	return (win);
 }
@@ -48,6 +49,7 @@ int	run_window(t_data *win)
 	mlx_hook(win->win, ON_MOUSEDOWN, (1L << 2), handle_mouse_press, win);
 	mlx_hook(win->win, ON_MOUSEUP, (1L << 3), handle_mouse_release, win);
 	mlx_hook(win->win, ON_MOUSEMOVE, (1L << 6), handle_mouse_move, win);
+	mlx_hook(win->win, ON_KEYDOWN, (1L << 0), handle_key_up, win);
 	mlx_key_hook(win->win, handle_key_down, win);
 	mlx_loop_hook(win->mlx, draw_points, win);
 	mlx_hook(win->win, DestroyNotify, 0, (int (*)())kill_process, win);

@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:16:48 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 14:23:49 by pepie            ###   ########.fr       */
+/*   Updated: 2024/05/22 13:08:39 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_vector	*rotate_point(t_data *win, t_vector *v)
 	return (rotated);
 }
 
-t_vector	*scale_point(float z, t_vector *vector, int scale)
+t_vector	*scale_point(double z, t_vector *vector, int scale)
 {
 	const t_vector	projection[3] = {
 	{z, 0, 0},
