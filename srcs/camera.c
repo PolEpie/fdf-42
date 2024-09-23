@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:16:48 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/22 13:08:39 by pepie            ###   ########.fr       */
+/*   Updated: 2024/09/23 13:15:22 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,7 @@ t_vector	*handle_point(t_data *win, t_vector *v)
 	rotated = scale_point(z, rotated, win->points->scale);
 	rotated->x += win->width / 2;
 	rotated->y += win->height / 2;
+	rotated->x += win->offset_x;
+	rotated->y += win->offset_y;
 	return (rotated);
 }

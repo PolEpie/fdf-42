@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:12:47 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/22 13:06:05 by pepie            ###   ########.fr       */
+/*   Updated: 2024/09/23 13:13:20 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_data	*create_window(void)
 	win->height = 1080;
 	win->mouse_pressed = false;
 	win->is_ctrl_press = false;
+	win->offset_x = 0;
+	win->offset_y = 0;
 	win->amplitude = 1;
 	return (win);
 }

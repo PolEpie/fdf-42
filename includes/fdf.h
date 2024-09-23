@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:57:11 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/22 13:08:21 by pepie            ###   ########.fr       */
+/*   Updated: 2024/09/23 13:12:11 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 
 # define KEY_ESC 65307
 # define KEY_CTRL 65507
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_A 97
+# define KEY_D 100
 
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
@@ -70,6 +74,8 @@ typedef struct s_data
 	int			mouse_pressed;
 	double		amplitude;
 	bool		is_ctrl_press;
+	int			offset_x;
+	int			offset_y;
 }	t_data;
 
 typedef struct s_rect
