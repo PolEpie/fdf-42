@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:12:47 by pepie             #+#    #+#             */
-/*   Updated: 2024/09/23 13:13:20 by pepie            ###   ########.fr       */
+/*   Updated: 2024/10/03 13:28:02 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	handle_file_with_verif(int fd, t_points *points)
 	if (!(points->row))
 		return (0);
 	*(points->row) = NULL;
-	points->w = 0;
+	points->w = -1;
 	if (!parse_file(fd, points))
-		return (0);
+		return (ft_lstclear(points->row, &free), free(points->row), 0);
 	return (1);
 }
 
@@ -77,9 +77,6 @@ int	main(int argv, char **argc)
 	t_points	*points;
 	t_data		*data;
 
-	data = create_window();
-	if (data == NULL)
-		return (1);
 	if (argv != 2)
 		return (write(2, "Wrong args: Exemple ./fdf test_maps/42.fdf\n", 43)
 			, 1);
@@ -91,6 +88,9 @@ int	main(int argv, char **argc)
 		return (1);
 	ft_printf("Parsing...\n");
 	if (!handle_file_with_verif(fd, points))
+		return (ft_printf("ERROR MAP!\n"), free(points), 1);
+	data = create_window();
+	if (data == NULL)
 		return (1);
 	data->points = points;
 	ft_printf("Parsed !\n");

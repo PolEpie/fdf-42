@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 03:26:27 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 16:52:39 by pepie            ###   ########.fr       */
+/*   Updated: 2024/10/03 13:34:13 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,15 @@ static int	process_line(int i, char *line, t_map **list)
 	else
 		list[i] = new_map(0, value);
 	ft_freesplit(splited_w_col);
+	free(splited_w_col);
 	return (1);
+}
+
+void	error_free(char **splited, char *line)
+{
+	ft_freesplit(splited);
+	free(splited);
+	free(line);
 }
 
 int	parse_line(char *line, t_map **list, int w)
@@ -54,11 +62,11 @@ int	parse_line(char *line, t_map **list, int w)
 	while (splited[i] && i < w)
 	{
 		if (!process_line(i, splited[i], list))
-			return (0);
+			return (error_free(splited, line), 0);
 		i++;
 	}
 	list[i] = NULL;
-	return (ft_freesplit(splited), free(line), 1);
+	return (ft_freesplit(splited), free(splited), free(line), 1);
 }
 
 int	get_line_lenght(char *line)
@@ -75,6 +83,7 @@ int	get_line_lenght(char *line)
 	while (splited[i])
 		i++;
 	ft_freesplit(splited);
+	free(splited);
 	return (i);
 }
 
@@ -85,21 +94,21 @@ int	parse_file(int fd, t_points *points)
 	int			*row;
 	int			len;
 
-	line = get_next_line(fd);
 	i = 0;
-	len = get_line_lenght(line);
-	if (points->w != 0 && points->w != len)
-		return (0);
-	points->w = len;
-	while (line != NULL)
+	line = NULL;
+	while (line != NULL || i == 0)
 	{
+		line = get_next_line(fd);
+		len = get_line_lenght(line);
+		if ((points->w != -1 && points->w != len) || len == 0)
+			return (free(line), 0);
+		points->w = len;
 		row = malloc(sizeof(t_map *) * (points->w + 1));
 		if (!row)
 			return (0);
 		ft_lstadd_back(points->row, ft_lstnew(row));
 		if (!parse_line(line, ft_lstlast(*(points->row))->content, len))
 			return (0);
-		line = get_next_line(fd);
 		i++;
 	}
 	points->h = i;
