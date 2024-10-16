@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:40:31 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 14:31:57 by pepie            ###   ########.fr       */
+/*   Updated: 2024/10/16 13:31:34 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x > 1920 || y > 1080 || x < 0 || y < 0)
+	if (x > WINDOW_W || y > WINDOW_H || x < 0 || y < 0)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
@@ -43,14 +43,14 @@ void	clamp_line(t_line *line)
 		line->endx = 0;
 	if (line->endy < 0)
 		line->endy = 0;
-	if (line->beginx > 1920)
-		line->beginx = 1920;
-	if (line->beginy > 1920)
-		line->beginy = 1920;
-	if (line->endx > 1920)
-		line->endx = 1920;
-	if (line->endy > 1920)
-		line->endy = 1920;
+	if (line->beginx > WINDOW_W)
+		line->beginx = WINDOW_W;
+	if (line->beginy > WINDOW_H)
+		line->beginy = WINDOW_H;
+	if (line->endx > WINDOW_W)
+		line->endx = WINDOW_W;
+	if (line->endy > WINDOW_H)
+		line->endy = WINDOW_H;
 }
 
 int	draw_line_ppos(t_data *data, t_line *line)

@@ -28,6 +28,7 @@ SRCS		=	fdf.c \
 				srcs/windows_keybinds.c \
 				srcs/draw.c \
 				srcs/camera.c \
+				srcs/parser_2.c \
 				srcs/parser.c \
 				srcs/utils.c \
 				srcs/matrix.c
@@ -40,7 +41,7 @@ OBJS		=	$(SRCS:/%.c=%.o)
 
 OS_NAME		:=	$(shell uname -s | tr A-Z a-z)
 
-$(NAME):		$(OBJS) $(LIBFT_A) $(MLX_A)
+$(NAME):		$(OBJS) $(LIBFT_A) $(MLX_A) includes/fdf.h
 				@if [ "$(OS_NAME)" = "darwin" ]; then \
 					echo "Compiling for MacOS..."; \
 					gcc $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(MLX) -lmlx -o $(NAME) $(MACOS_FLAG); \

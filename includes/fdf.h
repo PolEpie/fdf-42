@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 23:57:11 by pepie             #+#    #+#             */
-/*   Updated: 2024/09/23 13:12:11 by pepie            ###   ########.fr       */
+/*   Updated: 2024/10/16 14:30:35 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <stdlib.h>
 # include <math.h>
 # include <X11/X.h>
+
+# define WINDOW_W 1920
+# define WINDOW_H 1080
 
 # define KEY_ESC 65307
 # define KEY_CTRL 65507
@@ -36,6 +39,22 @@
 # define FLT_MAX 3.402823466e+38F /* max value */
 # define FLT_MIN 1.175494351e-38F /* min positive value */
 
+# ifndef COLOR_1
+#  define COLOR_1 0x581845
+# endif
+# ifndef COLOR_2
+#  define COLOR_2 0x900C3F
+# endif
+# ifndef COLOR_3
+#  define COLOR_3 0xC70039
+# endif
+# ifndef COLOR_4
+#  define COLOR_4 0xFF5733
+# endif
+# ifndef COLOR_5
+#  define COLOR_5 0xFFC30F
+# endif
+
 typedef struct s_vector
 {
 	double	x;
@@ -47,6 +66,8 @@ typedef struct s_points
 {
 	int		w;
 	int		h;
+	int		min_z;
+	int		max_z;
 	int		scale;
 	t_list	**row;
 }	t_points;
@@ -122,6 +143,7 @@ int			kill_process(t_data *arg);
 /* utils.c */
 int			deg_to_rad(int angleInDegrees);
 int			rad_to_deg(int angleInDegrees);
+void		free_row(void *list);
 
 /* windows_mouse.c */
 int			handle_mouse_move(int x, int y, t_data *win);
@@ -137,6 +159,10 @@ t_vector	*handle_point(t_data *win, t_vector *v);
 
 /* draw.c */
 int			draw_points(t_data *win);
+
+/* parser_error.c */
+bool		is_good_input(char *str);
+void		error_free(char **splited, char *line);
 
 /* parser.c */
 int			parse_file(int fd, t_points *points);

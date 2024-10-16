@@ -6,11 +6,48 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:38:30 by pepie             #+#    #+#             */
-/*   Updated: 2024/05/16 14:35:44 by pepie            ###   ########.fr       */
+/*   Updated: 2024/10/16 14:50:41 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static double	percent(int start, int end, int current)
+{
+	double	placement;
+	double	distance;
+	int		delta;
+
+	if (start < 0)
+	{
+		delta = ft_math_abs(start);
+		start += delta;
+		end += delta;
+		current += delta;
+	}
+	placement = current - start;
+	distance = end - start;
+	if (!distance)
+		return (1.0);
+	return (placement / distance);
+}
+
+int	get_z_color(t_data *win, int cur_z)
+{
+	double	percentage;
+
+	percentage = percent(win->points->min_z, win->points->max_z, cur_z);
+	if (percentage < 0.2)
+		return (COLOR_1);
+	else if (percentage < 0.4)
+		return (COLOR_2);
+	else if (percentage < 0.6)
+		return (COLOR_3);
+	else if (percentage < 0.8)
+		return (COLOR_4);
+	else
+		return (COLOR_5);
+}
 
 void	draw_line(t_data *win, t_vector *v1, t_vector *v2, long color)
 {
@@ -18,7 +55,7 @@ void	draw_line(t_data *win, t_vector *v1, t_vector *v2, long color)
 	t_vector	*pos2;
 
 	if (color == 0)
-		color = 0xFFFFFF;
+		color = get_z_color(win, v1->z + v2->z / 2);
 	pos1 = handle_point(win, v1);
 	if (!pos1)
 		return ;

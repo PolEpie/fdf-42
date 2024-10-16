@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 00:12:47 by pepie             #+#    #+#             */
-/*   Updated: 2024/10/03 13:28:02 by pepie            ###   ########.fr       */
+/*   Updated: 2024/10/16 14:31:00 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ t_data	*create_window(void)
 	mlx = mlx_init();
 	if (!mlx)
 		return (NULL);
-	win2 = mlx_new_window(mlx, 1920, 1080, "Fdf pepie");
+	win2 = mlx_new_window(mlx, WINDOW_W, WINDOW_H, "Fdf pepie");
 	win = malloc(sizeof(t_data));
 	if (!win)
 		return (NULL);
 	win->mlx = mlx;
 	win->win = win2;
-	win->img = mlx_new_image(win->mlx, 1920, 1080);
+	win->img = mlx_new_image(win->mlx, WINDOW_W, WINDOW_H);
 	win->addr = mlx_get_data_addr(win->img, &win->bits_per_pixel,
 			&win->line_length, &win->endian);
-	win->width = 1920;
-	win->height = 1080;
+	win->width = WINDOW_W;
+	win->height = WINDOW_H;
 	win->mouse_pressed = false;
 	win->is_ctrl_press = false;
 	win->offset_x = 0;
@@ -61,13 +61,20 @@ int	run_window(t_data *win)
 
 int	handle_file_with_verif(int fd, t_points *points)
 {
+	int	h;
+
 	points->row = malloc(sizeof(t_list *));
 	if (!(points->row))
 		return (0);
 	*(points->row) = NULL;
 	points->w = -1;
-	if (!parse_file(fd, points))
-		return (ft_lstclear(points->row, &free), free(points->row), 0);
+	points->min_z = 0;
+	points->max_z = 0;
+	h = parse_file(fd, points);
+	if (h == 0)
+		return (ft_lstclear(points->row, &free_row), free(points->row), 0);
+	points->h = h;
+	points->scale = 10000 / ft_mathmax(points->w, points->h);
 	return (1);
 }
 
@@ -88,10 +95,11 @@ int	main(int argv, char **argc)
 		return (1);
 	ft_printf("Parsing...\n");
 	if (!handle_file_with_verif(fd, points))
-		return (ft_printf("ERROR MAP!\n"), free(points), 1);
+		return (ft_printf("ERROR MAP!\n"), free(points), close(fd), 1);
+	close(fd);
 	data = create_window();
 	if (data == NULL)
-		return (1);
+		return (ft_printf("ERROR MALLOC!\n"), free(points), 1);
 	data->points = points;
 	ft_printf("Parsed !\n");
 	return (run_window(data));
@@ -104,7 +112,7 @@ int	kill_process(t_data *arg)
 		free(arg->last_mouse);
 	if (arg->points)
 	{
-		ft_lstclear(arg->points->row, &free);
+		ft_lstclear(arg->points->row, &free_row);
 		free(arg->points->row);
 		free(arg->points);
 	}

@@ -6,7 +6,7 @@
 /*   By: pepie <pepie@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 03:26:27 by pepie             #+#    #+#             */
-/*   Updated: 2024/10/03 13:34:13 by pepie            ###   ########.fr       */
+/*   Updated: 2024/10/16 14:33:50 by pepie            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,36 @@ t_map	*new_map(long color, int value)
 	return (map);
 }
 
-static int	process_line(int i, char *line, t_map **list)
+static int	process_line(int i, char *line, t_map **list, t_points *points)
 {
-	char	**splited_w_col;
+	char	**split;
 	int		value;
 
-	splited_w_col = ft_split(line, ',');
-	if (!splited_w_col)
+	split = ft_split(line, ',');
+	if (!split)
 		return (0);
-	value = ft_atoi(splited_w_col[0]);
-	if (splited_w_col[1])
-		list[i] = new_map(ft_atol_base(splited_w_col[1] + 2,
-					"0123456789ABCDEF"), value);
+	value = ft_atoi(split[0]);
+	if (!is_good_input(split[0]))
+		return (ft_freesplit(split), free(split), 0);
+	if (split[1])
+	{
+		if (!is_good_input(split[1]))
+			return (ft_freesplit(split), free(split), 0);
+		list[i] = new_map(ft_atol_base(split[1] + 2,
+					"0123456789abcdef"), value);
+	}
 	else
 		list[i] = new_map(0, value);
-	ft_freesplit(splited_w_col);
-	free(splited_w_col);
+	if (value < points->min_z)
+		points->min_z = value;
+	if (value > points->max_z)
+		points->max_z = value;
+	ft_freesplit(split);
+	free(split);
 	return (1);
 }
 
-void	error_free(char **splited, char *line)
-{
-	ft_freesplit(splited);
-	free(splited);
-	free(line);
-}
-
-int	parse_line(char *line, t_map **list, int w)
+int	parse_line(char *line, t_map **list, int w, t_points *points)
 {
 	char	**splited;
 	int		i;
@@ -56,16 +59,18 @@ int	parse_line(char *line, t_map **list, int w)
 	i = 0;
 	if (!list)
 		return (0);
+	ft_strtolower(line);
 	splited = ft_split(line, ' ');
 	if (!splited)
 		return (0);
+	list[i] = NULL;
 	while (splited[i] && i < w)
 	{
-		if (!process_line(i, splited[i], list))
+		if (!process_line(i, splited[i], list, points))
 			return (error_free(splited, line), 0);
 		i++;
+		list[i] = NULL;
 	}
-	list[i] = NULL;
 	return (ft_freesplit(splited), free(splited), free(line), 1);
 }
 
@@ -100,18 +105,18 @@ int	parse_file(int fd, t_points *points)
 	{
 		line = get_next_line(fd);
 		len = get_line_lenght(line);
-		if ((points->w != -1 && points->w != len) || len == 0)
+		if (line == NULL)
+			return (points->w != -1);
+		if (points->w != -1 && points->w != len)
 			return (free(line), 0);
 		points->w = len;
 		row = malloc(sizeof(t_map *) * (points->w + 1));
 		if (!row)
 			return (0);
 		ft_lstadd_back(points->row, ft_lstnew(row));
-		if (!parse_line(line, ft_lstlast(*(points->row))->content, len))
+		if (!parse_line(line, ft_lstlast(*(points->row))->content, len, points))
 			return (0);
 		i++;
 	}
-	points->h = i;
-	points->scale = 10000 / ft_mathmax(points->w, points->h);
-	return (1);
+	return (i);
 }
